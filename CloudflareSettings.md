@@ -74,7 +74,7 @@ Result:
 
 ### 6) Enabled public access
 
-Create a policy for BypassAuth
+Create a policy for BypassAuth. Info [here](https://filebrowserquantum.com/en/docs/getting-started/reverse-proxy/)
 
 ---
 
