@@ -1,0 +1,96 @@
+name: filebrowser-quantum
+services:
+  filebrowser-quantum:
+    cpu_shares: 90
+    command: []
+    container_name: filebrowser-quantum
+    deploy:
+      resources:
+        limits:
+          memory: 8064M
+    environment:
+      - FILEBROWSER_ADMIN_PASSWORD=StrongPassword12345
+      - FILEBROWSER_CONFIG=/config/config.yaml
+      - TZ=Asia/Kolkata
+    group_add:
+      - "1003" # Copied from 'getent group family'
+    hostname: filebrowser-quantum
+    image: gtstef/filebrowser:1.1.0-stable
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/filebrowser.png
+    ports:
+      - target: 80
+        published: "8181"
+        protocol: tcp
+    restart: unless-stopped
+    user: 999:990 # UID:GID for 'filebrowser' user and 'family' group, copied from 'id filebrowser'
+    volumes:
+      - type: bind
+        source: /DATA/srv/users
+        target: /users
+      - type: bind
+        source: /DATA/srv/family_docs
+        target: /family_docs
+        read_only: true
+      - type: bind
+        source: /DATA/Media
+        target: /media
+      - type: bind
+        source: /DATA/AppData/filebrowser-quantum/data/db
+        target: /database
+      - type: bind
+        source: /DATA/AppData/filebrowser-quantum/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/filebrowser-quantum/data/cache
+        target: /cache
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: FileBrowser Web UI
+          host: "8181"
+          protocol: tcp
+      volumes:
+        - container: /users
+          description:
+            en_us: User home directories
+        - container: /family_docs
+          description:
+            en_us: Read-only family documents
+        - container: /media
+          description:
+            en_us: Media library
+        - container: /database
+          description:
+            en_us: Database
+        - container: /config
+          description:
+            en_us: Configuration
+        - container: /cache
+          description:
+            en_us: Cache and previews
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: Nilesh
+  category: Custom
+  description:
+    en_us: A modern web-based file manager
+  developer: filebrowser
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/filebrowser.png
+  index: /
+  is_uncontrolled: false
+  main: filebrowser-quantum
+  port_map: "8181"
+  scheme: http
+  store_app_id: filebrowser-quantum
+  title:
+    custom: ""
+    en_us: FileBrowser Quantum

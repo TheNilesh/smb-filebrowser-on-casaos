@@ -1,0 +1,18 @@
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+
+# Environment files (if you add any sensitive configs)
+.env
+*.secret
